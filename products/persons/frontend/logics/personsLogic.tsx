@@ -474,7 +474,7 @@ export const personsLogic = kea<personsLogicType>([
                                     values: { id: uuid },
                                     tags: CUSTOMER_ANALYTICS_DEFAULT_QUERY_TAGS,
                                 },
-                                { refresh: 'force_blocking' }
+                                { refresh: 'blocking' }
                             )
                         } catch (error) {
                             // The blocking query is aborted when navigation moves on before it resolves.
