@@ -1396,12 +1396,9 @@ export const insightLogic: LogicWrapper<insightLogicType> = kea<insightLogicType
                     router.actions.push(urls.dashboard(dashboards[0], savedInsight.short_id))
                 } else if (insightNumericId) {
                     if (isInsightSceneInstance(props)) {
-                        const scene = insightSceneLogic.findMounted()
-                        if (scene?.values.dashboardBackPath) {
-                            router.actions.push(scene.values.dashboardBackPath)
-                        } else {
-                            scene?.actions.setInsightMode(ItemMode.View, InsightEventSource.InsightHeader)
-                        }
+                        insightSceneLogic
+                            .findMounted()
+                            ?.actions.setInsightMode(ItemMode.View, InsightEventSource.InsightHeader)
                     }
                 } else {
                     router.actions.push(withBackLink(urls.insightView(savedInsight.short_id)))
