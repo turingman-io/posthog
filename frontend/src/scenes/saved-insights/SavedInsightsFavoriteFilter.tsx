@@ -12,14 +12,15 @@ export function SavedInsightsFavoriteFilter({
     setFilters: (filters: Partial<SavedInsightFilters>) => void
     borderless: boolean
 }): JSX.Element {
+    const isFavorited = !!favorited
     return (
         <LemonButton
             type="secondary"
-            status={borderless && !favorited ? 'alt' : 'default'}
-            active={favorited || false}
-            onClick={() => setFilters({ favorited: !favorited })}
+            status={borderless && !isFavorited ? 'alt' : 'default'}
+            active={isFavorited}
+            onClick={() => setFilters({ favorited: !isFavorited })}
             size="small"
-            icon={favorited ? <IconHeartFilled className="text-danger" /> : <IconHeart className="text-secondary" />}
+            icon={isFavorited ? <IconHeartFilled className="text-danger" /> : <IconHeart className="text-secondary" />}
         >
             Favorites
         </LemonButton>
