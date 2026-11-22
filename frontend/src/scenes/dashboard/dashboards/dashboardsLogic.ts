@@ -515,11 +515,8 @@ export const dashboardsLogic = kea<dashboardsLogicType>([
                     filters.search && searchedDashboards
                         ? searchedDashboards.map((d) => (rawDashboards[d.id] as DashboardBasicType | undefined) ?? d)
                         : allDashboards
-                if (currentTab === DashboardsTab.Pinned) {
-                    haystack = haystack.filter((d) => d.pinned)
-                }
-                if (filters.pinned) {
-                    haystack = haystack.filter((d) => d.pinned)
+                if (currentTab === DashboardsTab.Pinned || filters.pinned) {
+                    haystack = haystack.filter((d) => !d.pinned)
                 }
                 if (filters.shared) {
                     haystack = haystack.filter((d) => d.is_shared)
