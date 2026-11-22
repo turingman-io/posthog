@@ -343,12 +343,7 @@ export function LemonInputSelect<T = string>({
         const ret: LemonInputSelectOption<T>[] = []
         // Show the input value if custom values are allowed and it's not in the list
         if (inputValue && !stringKeys.includes(inputValue)) {
-            const exactMatch = optionMaps.keyToOption.get(inputValue)
-            if (exactMatch) {
-                // Enter commits the first row. With disableFiltering the caller sets the order, so
-                // the option the person typed can be anywhere in the list unless it goes first.
-                ret.push(exactMatch)
-            } else if (allowCustomValues) {
+            if (allowCustomValues && !optionMaps.keySet.has(inputValue)) {
                 const unescapedInputValue = inputValue.replaceAll('\\,', ',') // Transform escaped commas to plain commas
                 ret.push({ key: unescapedInputValue, label: unescapedInputValue, __isInput: true })
             }
@@ -372,8 +367,8 @@ export function LemonInputSelect<T = string>({
                 // We don't want to show the input-based option again. The check for __isInput covers the case the user types something that is already an option, but we want to keep the original option
                 continue
             }
-            if (ret[0]?.key === option.key) {
-                // We've already added this option to the top earlier
+            if (mode === 'single' && ret[0]?.key === option.key) {
+                // In single-select mode, we've already added the selected value to the top earlier
                 continue
             }
             ret.push(option)
