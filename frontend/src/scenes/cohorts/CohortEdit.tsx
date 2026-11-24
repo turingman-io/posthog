@@ -35,14 +35,13 @@ import { SceneAddToNotebookDropdownMenu } from 'lib/components/Scenes/InsightOrD
 import { SceneFile } from 'lib/components/Scenes/SceneFile'
 import { TestAccountFilterSwitch } from 'lib/components/TestAccountFiltersSwitch'
 import { TZLabel } from 'lib/components/TZLabel'
-import { CohortTypeEnum, FEATURE_FLAGS } from 'lib/constants'
+import { CohortTypeEnum } from 'lib/constants'
 import { useFeatureFlag } from 'lib/hooks/useFeatureFlag'
 import { useFileSystemLogView } from 'lib/hooks/useFileSystemLogView'
 import { LemonButton } from 'lib/lemon-ui/LemonButton'
 import { LemonField } from 'lib/lemon-ui/LemonField'
 import { LemonSelect } from 'lib/lemon-ui/LemonSelect'
 import { Spinner } from 'lib/lemon-ui/Spinner/Spinner'
-import { featureFlagLogic } from 'lib/logic/featureFlagLogic'
 import { useAttachedLogic } from 'lib/logic/scenes/useAttachedLogic'
 import { ButtonPrimitive } from 'lib/ui/Button/ButtonPrimitives'
 import { cn } from 'lib/utils/css-classes'
@@ -240,7 +239,6 @@ export function CohortEdit({ id, attachTo }: CohortEditProps): JSX.Element {
         realtimeSwitchAction,
         realtimeSwitchLoading,
     } = useValues(logic)
-    const { featureFlags } = useValues(featureFlagLogic)
     const { canCopyToProject } = useValues(interProjectCopyLogic)
     const { openSidePanel } = useActions(sidePanelStateLogic)
     const todayRailNav = useFeatureFlag('TODAY_RAIL_NAV')
@@ -442,9 +440,6 @@ export function CohortEdit({ id, attachTo }: CohortEditProps): JSX.Element {
                                     ) : undefined
                                 }
                                 description={cohort.description || ''}
-                                // When the SceneMenuBar renders above the title, the title's default
-                                // negative top margin pulls it up under the bar — drop it in that case.
-                                className={featureFlags[FEATURE_FLAGS.SCENE_MENU_BAR] ? 'mt-0' : undefined}
                                 resourceType={{
                                     to: urls.cohorts(),
                                     type: RESOURCE_TYPE,
